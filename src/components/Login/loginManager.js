@@ -20,6 +20,7 @@ export const handleGoogleSignIn = () => {
         photo: photoURL,
         success: true
       };
+      
       return signedInUser;
     })
     .catch(err => {

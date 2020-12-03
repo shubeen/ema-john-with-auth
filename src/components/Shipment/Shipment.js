@@ -7,7 +7,9 @@ const Shipment = () => {
     
         const { register, handleSubmit, watch, errors } = useForm();
         const [loggedInUser, setLoggedInUser]= useContext(UserContext);
-        const onSubmit = data => console.log(data);
+        const onSubmit = data => {
+          console.log( 'form submitted', data);
+        };
       
         console.log(watch("example")); // watch input value by passing the name of it
       
