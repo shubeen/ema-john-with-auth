@@ -6,8 +6,8 @@ import Cart from '../Cart/Cart';
 import happyImage from '../../images/giphy.gif';
 import { useHistory } from 'react-router-dom';
 
-const Review = () => {
-
+const Review = (props) => {
+    
     const [cart, setCart] = useState([]);
     const [orderPlaced, setOrderPlaced] = useState(false);
     const history = useHistory();
@@ -49,8 +49,10 @@ const Review = () => {
     if (orderPlaced) {
         thankYou = <img src={happyImage} alt="" />
     }
+    
     return (
         <div className='twin-container'>
+            
             <div className='product-container'>
                 {
                     cart.map(pd => <ReviewItem
