@@ -8,70 +8,66 @@ import { Link } from 'react-router-dom';
 
 const Shop = () => {
     //   const first20 = fakeData.slice(0,20);
-      const [products,setProducts]= useState([]);
-      const [cart, setCart] = useState([]);
+    const [products, setProducts] = useState([]);
+    const [cart, setCart] = useState([]);
 
-        useEffect(() => {
-            fetch('http://localhost:4000/products')
+    useEffect(() => {
+        fetch('http://localhost:4000/products')
             .then(res => res.json())
-            .then(data=> setProducts(data));
+            .then(data => setProducts(data));
+    },[])
+
+    useEffect(() => {
+        const savedCart = getDatabaseCart();
+        const productKeys = Object.keys(savedCart);
+        fetch('http://localhost:4000/productsByKeys', {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(productKeys)
         })
+            .then(res => res.json())
+            .then(data => setCart(data))
+    }, [])
 
-        useEffect(()=>{
-            const savedCart = getDatabaseCart();
-            const productKeys= Object.keys(savedCart);
-            if(products.length){
-                const previousCart = productKeys.map(existingKeys =>{
-                    const product = products.find(pd => pd.key ===existingKeys);
-                    product.quantity = savedCart[existingKeys];
-                    return product;
-                })
-                setCart(previousCart);
-            }
-        },[products])
-
-      const handleAddProduct = (product)=>{
-          console.log('product added', product)
-          const toBeAddedKey = product.key;
-          const sameProduct = cart.find(pd => pd.key === toBeAddedKey);
-          let count = 1;
-          let newCart;
-          if (sameProduct){
-              count = sameProduct.quantity +1;
-              sameProduct.quantity= count;
-              const others = cart.filter(pd => pd.key !== toBeAddedKey);
-              newCart= [...others, sameProduct];
-          }
-          else{
-              product.quantity =1;
-              newCart = [...cart, product];
-          }
-          setCart(newCart);
-          
-          addToDatabaseCart(product.key, count);
-      }
+    
+    const handleAddProduct = (product) => {
+        const toBeAddedKey = product.key;
+        const sameProduct = cart.find(pd => pd.key === toBeAddedKey);
+        let count = 1;
+        let newCart;
+        if (sameProduct) {
+            count = sameProduct.quantity + 1;
+            sameProduct.quantity = count;
+            const others = cart.filter(pd => pd.key !== toBeAddedKey);
+            newCart = [...others, sameProduct];
+        }
+        else {
+            product.quantity = 1;
+            newCart = [...cart, product];
+        }
+        setCart(newCart);
+        addToDatabaseCart(product.key, count);
+    }
 
     return (
         <div className="twin-container">
             <div className="product-container">
                 {
                     products.map(pd => <Product
-                            key= {pd.key} 
-                            handleAddProduct = {handleAddProduct}
-                            product={pd}
-                            showAddToCart={true}>
-
-                        </Product>)
+                        key={pd.key}
+                        handleAddProduct={handleAddProduct}
+                        product={pd}
+                        showAddToCart={true}>
+                    </Product>)
                 }
-                
-        </div>
-        <div className="cart-container">
-            <Cart cart={cart}>
-            <Link to ='/review'>
-            <button className="main-button" > Review Order</button>
-            </Link>
-            </Cart>
-        </div>
+            </div>
+            <div className="cart-container">
+                <Cart cart={cart}>
+                    <Link to='/review'>
+                        <button className="main-button" > Review Order</button>
+                    </Link>
+                </Cart>
+            </div>
         </div>
     );
 };

@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 const Header = () => {
     const [loggedInUser, setLoggedInUser]= useContext(UserContext);
-    const [user,setUser] = useState({});
+    
     return (
         <div className='Header'>
             <img src={logo} alt=""/>
@@ -16,7 +16,7 @@ const Header = () => {
                 <Link to="/shop">Shop</Link>
                 <Link to="/review">Order review</Link>
                 <Link to="/inventory">Manage Inventory  </Link>
-                <p>Welcome ,  {loggedInUser.name}</p>
+                
                 <Link><button onClick={()=>setLoggedInUser({})}>Sign Out</button></Link>
             </nav>
         </div>

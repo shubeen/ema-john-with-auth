@@ -8,13 +8,13 @@ const ProductDetails = () => {
     const {productKey} = useParams();
     const [product,setProduct] = useState({})
 
-    
+
     useEffect(() => {
-        fetch('http://localhost:4000/product/' + productKey)
+        fetch('http://localhost:4000/product/'+productKey)
         .then(res => res.json())
         .then(data => setProduct(data))
     },[productKey])
-    //  const product = fakeData.find(pd=> pd.key === productKey)
+
     return (
         <div>
             <h1> Product Details: {productKey} </h1>

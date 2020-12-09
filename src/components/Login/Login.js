@@ -36,7 +36,6 @@ function Login() {
       .then(res => {
         handleResponse(res, true);
       })
-
   }
 
   const signOut = () => {
