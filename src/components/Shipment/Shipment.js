@@ -13,7 +13,7 @@ const Shipment = () => {
           const savedCart = getDatabaseCart();
           const orderDetails = {...loggedInUser, product: savedCart, shipment: data, orderTime: new Date()};
 
-          fetch('http://localhost:4000/addOrder',{
+          fetch('https://stark-thicket-25212.herokuapp.com/addOrder',{
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'

@@ -12,7 +12,7 @@ const Shop = () => {
     const [cart, setCart] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:4000/products')
+        fetch('https://stark-thicket-25212.herokuapp.com/products')
             .then(res => res.json())
             .then(data => setProducts(data));
     },[])
@@ -20,7 +20,7 @@ const Shop = () => {
     useEffect(() => {
         const savedCart = getDatabaseCart();
         const productKeys = Object.keys(savedCart);
-        fetch('http://localhost:4000/productsByKeys', {
+        fetch('https://stark-thicket-25212.herokuapp.com/productsByKeys', {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(productKeys)

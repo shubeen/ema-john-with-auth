@@ -10,7 +10,7 @@ const ProductDetails = () => {
 
 
     useEffect(() => {
-        fetch('http://localhost:4000/product/'+productKey)
+        fetch('https://stark-thicket-25212.herokuapp.com/products/'+productKey)
         .then(res => res.json())
         .then(data => setProduct(data))
     },[productKey])

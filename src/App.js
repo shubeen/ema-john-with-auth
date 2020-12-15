@@ -33,7 +33,7 @@ function App(props) {
   return (
     <UserContext.Provider value = {[loggedInUser, setLoggedInUser] } >
 
-  <h3>Email: {[loggedInUser.email, loggedInUser.name]}</h3>
+  <h3>Email: {[ loggedInUser.email]}</h3>
       
       <Router>
       <Header></Header>
